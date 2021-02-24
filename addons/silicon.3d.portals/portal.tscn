@@ -1,0 +1,89 @@
+[gd_scene load_steps=6 format=2]
+
+[sub_resource type="Shader" id=9]
+code = "shader_type spatial;
+render_mode unshaded, cull_disabled;
+
+const float MESH_DEPTH = 0.05;
+const float INV_MESH_DEPTH = 1.0 / MESH_DEPTH;
+
+uniform vec4 albedo : hint_color;
+uniform sampler2D portal_texture : hint_albedo;
+
+varying float front;
+varying float camera_behind;
+varying float camera_by_portal;
+
+void vertex() {
+	// Automatically calculate required thickness of mesh to prevent near clipping issues.
+	vec4 near_point = INV_PROJECTION_MATRIX * vec4(-1, -1, -1, 1);
+	near_point /= near_point.w;
+	float thickness = length(near_point.xyz);
+	
+	vec3 local_camera = (inverse(WORLD_MATRIX) * CAMERA_MATRIX[3]).xyz;
+	camera_by_portal = float(clamp(local_camera.xy, -0.5, 0.5) == local_camera.xy);
+	camera_behind = local_camera.z;
+	
+	VERTEX.z -= MESH_DEPTH * 0.5;
+	VERTEX.z *= 0.5;
+	front = -VERTEX.z / MESH_DEPTH;
+	
+	VERTEX.z *= INV_MESH_DEPTH * thickness * 2.0;
+}
+
+void fragment() {
+	vec4 portal = texture(portal_texture, SCREEN_UV);
+	
+	if (camera_behind < 0.0 || (front != 0.0 && !bool(camera_by_portal))) {
+		discard;
+	}
+	ALBEDO = portal.rgb;
+}
+"
+
+[sub_resource type="ShaderMaterial" id=15]
+resource_local_to_scene = true
+shader = SubResource( 9 )
+shader_param/albedo = Color( 1, 1, 1, 1 )
+
+[sub_resource type="CubeMesh" id=12]
+size = Vector3( 1, 1, 0.05 )
+
+[sub_resource type="QuadMesh" id=13]
+
+[sub_resource type="SpatialMaterial" id=14]
+
+[node name="Portal" type="Spatial"]
+process_priority = 1000
+
+[node name="__PORTAL_TAG__" type="Node" parent="."]
+__meta__ = {
+"_editor_description_": "Used to make sure that the node has all its children nodes setup."
+}
+
+[node name="Viewport" type="Viewport" parent="."]
+size = Vector2( 20, 20 )
+keep_3d_linear = true
+usage = 3
+render_target_update_mode = 0
+
+[node name="Camera" type="Camera" parent="Viewport"]
+cull_mask = 1047551
+
+[node name="Surface" type="MeshInstance" parent="."]
+layers = 1024
+material_override = SubResource( 15 )
+cast_shadow = 0
+generate_lightmap = false
+mesh = SubResource( 12 )
+material/0 = null
+
+[node name="Default" type="MeshInstance" parent="."]
+visible = false
+mesh = SubResource( 13 )
+material/0 = SubResource( 14 )
+
+[node name="Sender" type="Spatial" parent="."]
+transform = Transform( -1, 0, -3.25841e-07, 0, 1, 0, 3.25841e-07, 0, -1, 0, 0, 0 )
+
+[node name="Debug" type="ImmediateGeometry" parent="."]

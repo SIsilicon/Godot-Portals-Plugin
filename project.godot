@@ -1,0 +1,50 @@
+; Engine configuration file.
+; It's best edited using the editor UI and not directly,
+; since the parameters that go here are not all obvious.
+;
+; Format:
+;   [section] ; section goes between []
+;   param=value ; assign values to parameters
+
+config_version=4
+
+_global_script_classes=[ {
+"base": "Spatial",
+"class": "Portal",
+"language": "GDScript",
+"path": "res://addons/silicon.3d.portals/portal.gd"
+} ]
+_global_script_class_icons={
+"Portal": "res://addons/silicon.3d.portals/portal.svg"
+}
+
+[application]
+
+config/name="Portals Plugin Demo"
+run/main_scene="res://PortalTest.tscn"
+
+[autoload]
+
+PortalServer="*res://addons/silicon.3d.portals/portal_server.gd"
+
+[editor_plugins]
+
+enabled=PoolStringArray( "silicon.3d.portals" )
+
+[layer_names]
+
+3d_render/layer_11="PORTAL_RESERVED"
+3d_render/layer_12="PORTAL_RESERVED"
+3d_render/layer_13="PORTAL_RESERVED"
+3d_render/layer_14="PORTAL_RESERVED"
+3d_render/layer_15="PORTAL_RESERVED"
+3d_render/layer_16="PORTAL_RESERVED"
+3d_render/layer_17="PORTAL_RESERVED"
+3d_render/layer_18="PORTAL_RESERVED"
+3d_render/layer_19="PORTAL_RESERVED"
+3d_render/layer_20="PORTAL_RESERVED"
+3d_render/layer_21="PORTAL_RESERVED"
+
+[rendering]
+
+environment/default_environment="res://default_env.tres"

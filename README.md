@@ -1,10 +1,6 @@
-# ADDON_NAME
+# Godot Portals Plugin
 
 ADDON_DESCRIPTION
-
-This repository only contains the add-on. See
-[USER/REPOSITORY-demo](https://github.com/USER/REPOSITORY-demo)
-for the demonstration project.
 
 ## Features
 
@@ -18,12 +14,12 @@ for the demonstration project.
 
 - Open the Godot editor.
 - Navigate to the **AssetLib** tab at the top of the editor and search for
-  "ADDON_NAME".
+  "Portals Plugin".
 - Install the
-  [*ADDON_NAME*](https://godotengine.org/asset-library/asset/ASSETLIB_ID)
+  [*Portals Plugin*](https://godotengine.org/asset-library/asset/ASSETLIB_ID)
   plugin. Keep all files checked during installation.
 - In the editor, open **Project > Project Settings**, go to **Plugins**
-  and enable the **ADDON_NAME** plugin.
+  and enable the **Portals Plugin**.
 
 ### Manual installation
 
@@ -33,16 +29,16 @@ following its `master` branch.
 - Clone this Git repository:
 
 ```bash
-git clone https://github.com/USER/REPOSITORY.git
+git clone https://github.com/SIsilicon/Godot-Portals-Plugin.git
 ```
 
 Alternatively, you can
-[download a ZIP archive](https://github.com/USER/REPOSITORY/archive/master.zip)
+[download a ZIP archive](https://github.com/SIsilicon/Godot-Portals-Plugin/archive/master.zip)
 if you do not have Git installed.
 
 - Move the `addons/` folder to your project folder.
 - In the editor, open **Project > Project Settings**, go to **Plugins**
-  and enable the **ADDON_NAME** plugin.
+  and enable the **Portals Plugin**.
 
 ## Usage
 
@@ -50,7 +46,7 @@ USAGE
 
 ## License
 
-Copyright © 2020 FULL NAME and contributors
+Copyright © 2020 Roujel Williams
 
 Unless otherwise specified, files in this repository are licensed under the
 MIT license. See [LICENSE.md](LICENSE.md) for more information.

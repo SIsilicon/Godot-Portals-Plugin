@@ -1,0 +1,120 @@
+[gd_scene load_steps=12 format=2]
+
+[ext_resource path="res://addons/silicon.3d.portals/portal.gd" type="Script" id=1]
+[ext_resource path="res://camera.gd" type="Script" id=2]
+[ext_resource path="res://addons/silicon.3d.portals/teleportable.gd" type="Script" id=3]
+[ext_resource path="res://addons/kenney_prototype_textures/green/texture_01.png" type="Texture" id=4]
+[ext_resource path="res://addons/kenney_prototype_textures/dark/texture_01.png" type="Texture" id=5]
+[ext_resource path="res://addons/kenney_prototype_textures/red/texture_03.png" type="Texture" id=6]
+
+[sub_resource type="SpatialMaterial" id=1]
+albedo_color = Color( 2, 2, 2, 1 )
+albedo_texture = ExtResource( 5 )
+uv1_scale = Vector3( 2, 2, 2 )
+uv1_triplanar = true
+
+[sub_resource type="SpatialMaterial" id=2]
+albedo_color = Color( 0.811765, 0.462745, 0.176471, 1 )
+
+[sub_resource type="SpatialMaterial" id=3]
+albedo_color = Color( 0.215686, 0.270588, 0.898039, 1 )
+
+[sub_resource type="SpatialMaterial" id=4]
+albedo_texture = ExtResource( 4 )
+uv1_scale = Vector3( 2, 2, 2 )
+uv1_triplanar = true
+
+[sub_resource type="SpatialMaterial" id=5]
+albedo_texture = ExtResource( 6 )
+uv1_scale = Vector3( 2, 2, 2 )
+uv1_triplanar = true
+
+[node name="Spatial" type="Spatial"]
+
+[node name="Camera" type="Camera" parent="."]
+transform = Transform( -1.55124e-07, 0.0172953, 0.99985, 4.9796e-08, 0.99985, -0.0172953, -1, 4.71056e-08, -1.55962e-07, -0.843793, 0.963179, -1.5127 )
+cull_mask = 2047
+current = true
+script = ExtResource( 2 )
+
+[node name="Teleportable" type="Node" parent="Camera"]
+script = ExtResource( 3 )
+
+[node name="CSGBox3" type="CSGBox" parent="."]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0 )
+invert_faces = true
+width = 5.0
+depth = 5.0
+material = SubResource( 1 )
+
+[node name="CSGBox" type="CSGBox" parent="CSGBox3"]
+operation = 2
+invert_faces = true
+width = 1.0
+depth = 1.0
+material = SubResource( 1 )
+
+[node name="CSGBox2" type="CSGBox" parent="CSGBox3"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -3, 0, -1.5 )
+invert_faces = true
+width = 12.0
+material = SubResource( 1 )
+
+[node name="PortalA" type="Spatial" parent="CSGBox3"]
+transform = Transform( -8.74228e-08, 0, -1, 0, 2, 0, 2, 0, -4.37114e-08, 0, 0, 1.5 )
+script = ExtResource( 1 )
+link = NodePath("../PortalB")
+cull_bias = 0.0
+default_material = SubResource( 2 )
+
+[node name="PortalB" type="Spatial" parent="CSGBox3"]
+transform = Transform( -2, 0, -3.25841e-07, 0, 2, 0, 6.51683e-07, 0, -1, 1.5, 0, 0 )
+script = ExtResource( 1 )
+link = NodePath("../PortalA")
+cull_bias = 0.0
+default_material = SubResource( 3 )
+
+[node name="PortalC" type="Spatial" parent="CSGBox3"]
+transform = Transform( -8.74228e-08, 0, -1, 0, 2, 0, 2, 0, -4.37114e-08, 2.5, 0, -1.5 )
+script = ExtResource( 1 )
+link = NodePath("../PortalD")
+cull_bias = 0.0
+default_material = SubResource( 2 )
+
+[node name="PortalD" type="Spatial" parent="CSGBox3"]
+transform = Transform( -5.6426e-07, 0, 1, 0, 2, 0, -2, 0, -2.8213e-07, -8.5, 0, -1.5 )
+script = ExtResource( 1 )
+link = NodePath("../PortalC")
+cull_bias = 0.0
+default_material = SubResource( 3 )
+
+[node name="CSGBox3" type="CSGBox" parent="CSGBox3"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -1.5, -1.5, 1.5 )
+operation = 2
+invert_faces = true
+width = 3.0
+height = 1.0
+depth = 3.0
+material = SubResource( 4 )
+
+[node name="CSGBox4" type="CSGBox" parent="CSGBox3"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 1.5, -1.5, -1.5 )
+operation = 2
+invert_faces = true
+width = 3.0
+height = 1.0
+depth = 3.0
+material = SubResource( 4 )
+
+[node name="CSGBox5" type="CSGBox" parent="CSGBox3"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 1.5, -1.5, 1.5 )
+operation = 2
+invert_faces = true
+width = 3.0
+height = 1.0
+depth = 3.0
+material = SubResource( 5 )
+
+[node name="DirectionalLight" type="DirectionalLight" parent="."]
+transform = Transform( 1, 0, 0, 0, -4.37114e-08, 1, 0, -1, -4.37114e-08, 0, 3.5, 5 )
+light_energy = 0.8
